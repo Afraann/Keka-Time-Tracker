@@ -8,26 +8,29 @@
     <style>
         :root[data-theme="dark"] {
             --bg-body: #121212;
-            --bg-card: #1E1E1E;
+            --bg-card: #201F1F;
+            /* Slightly warmer dark for Teams feel */
             --text-main: #E0E0E0;
             --text-muted: #A0A0A0;
             --border: #333333;
-            --accent: #4CAF50;
-            --accent-hover: #43A047;
+            --accent: #6264A7;
+            /* Microsoft Teams Purple */
+            --accent-hover: #464775;
             --input-bg: #2C2C2C;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
         :root[data-theme="light"] {
-            --bg-body: #F5F7FA;
+            --bg-body: #F3F2F1;
             --bg-card: #FFFFFF;
-            --text-main: #333333;
-            --text-muted: #666666;
-            --border: #E0E0E0;
-            --accent: #2196F3;
-            --accent-hover: #1976D2;
-            --input-bg: #F0F2F5;
-            --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --text-main: #242424;
+            --text-muted: #616161;
+            --border: #E1DFDD;
+            --accent: #6264A7;
+            /* Microsoft Teams Purple */
+            --accent-hover: #464775;
+            --input-bg: #F0F0F0;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
         }
 
         * {
@@ -50,10 +53,11 @@
 
         .container {
             background-color: var(--bg-card);
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: var(--shadow);
             width: 100%;
-            max-width: 480px;
+            max-width: 600px;
+            /* Wider for side-by-side */
             padding: 32px;
             border: 1px solid var(--border);
         }
@@ -62,13 +66,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
         h1 {
             font-size: 1.5rem;
             font-weight: 600;
-            letter-spacing: -0.5px;
+            color: var(--accent);
         }
 
         .theme-toggle {
@@ -91,13 +95,14 @@
 
         .upload-section {
             border: 2px dashed var(--border);
-            border-radius: 8px;
-            padding: 40px 20px;
+            border-radius: 6px;
+            padding: 32px 20px;
             text-align: center;
             cursor: pointer;
             position: relative;
             background-color: var(--input-bg);
             transition: border-color 0.2s;
+            margin-bottom: 20px;
         }
 
         .upload-section:hover,
@@ -118,18 +123,18 @@
         .upload-label {
             color: var(--text-muted);
             pointer-events: none;
+            font-size: 0.95rem;
         }
 
         .btn {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             background-color: var(--accent);
             color: white;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
             font-size: 1rem;
         }
 
@@ -148,49 +153,60 @@
             animation: fadeIn 0.4s ease-out;
         }
 
-        .stat-card {
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .stat-box {
             background-color: var(--input-bg);
-            padding: 16px;
+            padding: 20px;
             border-radius: 8px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .stat-value {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .main-stat {
             text-align: center;
-            margin: 24px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid var(--border);
         }
 
-        .main-stat-label {
+        .stat-label-small {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        .countdown {
-            font-size: 3rem;
+        .stat-value-large {
+            font-size: 1.8rem;
             font-weight: 700;
+            color: var(--text-main);
             font-feature-settings: "tnum";
+            line-height: 1.2;
+        }
+
+        .stat-value-accent {
             color: var(--accent);
-            line-height: 1.1;
+        }
+
+        .go-home-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 16px;
+            font-weight: 500;
+        }
+
+        .go-home-time {
+            color: var(--accent);
+            font-weight: 700;
         }
 
         .error-msg {
-            color: #ef5350;
+            color: #d13438;
+            /* Teams Error Red */
             margin-top: 16px;
             text-align: center;
             display: none;
@@ -199,9 +215,9 @@
 
         .loader {
             display: none;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: #fff;
             animation: spin 1s ease-in-out infinite;
@@ -226,8 +242,11 @@
             }
         }
 
-        .hidden {
-            display: none;
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -238,7 +257,6 @@
         <header>
             <h1>Keka Time Tracker</h1>
             <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme">
-                <!-- Icon handled by JS -->
                 ◐
             </button>
         </header>
@@ -259,26 +277,30 @@
         <div class="error-msg" id="errorMsg"></div>
 
         <div class="stats-container" id="results">
-            <div class="main-stat">
-                <div class="main-stat-label">Time Remaining to 7h 30m</div>
-                <div class="countdown" id="timeRemaining">--:--:--</div>
+
+            <div class="stats-grid">
+                <!-- Box 1: Active Session Info -->
+                <div class="stat-box">
+                    <div class="stat-label-small">Last Punch In: <span id="lastPunch">--:--</span></div>
+                    <div class="stat-label-small" style="margin-top: 8px;">Time in Office</div>
+                    <div class="stat-value-large" id="unsyncedDuration">--:--:--</div>
+                </div>
+
+                <!-- Box 2: Remaining Info -->
+                <div class="stat-box">
+                    <div class="stat-label-small">Time Remaining to 7h 30m</div>
+                    <div class="stat-value-large stat-value-accent" id="timeRemaining">--:--:--</div>
+                </div>
             </div>
 
-            <div class="stat-card">
-                <span class="stat-label">Synced Effective Hours</span>
-                <span class="stat-value" id="syncedHours">--</span>
+            <div class="go-home-text">
+                You can go home at <span class="go-home-time" id="goHomeTime">--:-- PM</span>
             </div>
-            <div class="stat-card">
-                <span class="stat-label">Last Punch In</span>
-                <span class="stat-value" id="lastPunch">--</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-label">Unsynced Duration (Live)</span>
-                <span class="stat-value" id="unsyncedDuration">--</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-label">Total Real-Time Hours</span>
-                <span class="stat-value" id="totalHours">--</span>
+
+            <!-- Hidden explicit details for debug/reference if needed -->
+            <div
+                style="text-align: center; margin-top: 10px; font-size: 0.8rem; color: var(--text-muted); opacity: 0.6;">
+                Synced Hours: <span id="syncedHours">--</span> | Total: <span id="totalHours">--</span>
             </div>
         </div>
     </div>
@@ -342,17 +364,14 @@
                         const errorData = await response.json();
                         errorMsg = errorData.error || errorMsg;
                     } catch (e) {
-                        // If JSON parse fails, read text
                         const text = await response.text();
                         console.error("Non-JSON error response:", text);
-                        errorMsg = `Server Error (${response.status}): ${response.statusText}`;
+                        errorMsg = `Server Error (${response.status})`;
                     }
                     throw new Error(errorMsg);
                 }
 
                 const data = await response.json();
-
-                // data format: { lastPunchIn: "HH:MM:SS AM/PM", syncedEffectiveHours: "3h 15m", isActiveSession: true }
                 startTracking(data);
                 resultsDiv.style.display = 'block';
 
@@ -368,7 +387,6 @@
 
         function startTracking(data) {
             // Parse Synced Hours
-            // Expected format: "3h 15m" or "0h 45m"
             const hoursMatch = data.syncedEffectiveHours.match(/(\d+)h/);
             const minsMatch = data.syncedEffectiveHours.match(/(\d+)m/);
 
@@ -380,17 +398,50 @@
             document.getElementById('syncedHours').textContent = data.syncedEffectiveHours;
             document.getElementById('lastPunch').textContent = data.lastPunchIn || "N/A";
 
-            // If not active, just show calculations based on synced hours (assuming synced is final)
+            // TARGET: 7h 30m = 450 minutes
+            const TARGET_MINUTES = (7 * 60) + 30;
+
+            // Calculate Go Home Time
+            // Remaining Needed = Target - Synced
+            // Go Home Time = Last Punch + Remaining Needed (if active)
+            // If not active, we can't calculate exact go home time from last punch, 
+            // but user asked for "At what time effective hours will be completed".
+            // If not active, it implies we are done or paused.
+
             if (!data.isActiveSession) {
-                document.getElementById('unsyncedDuration').textContent = "0h 0m";
+                document.getElementById('unsyncedDuration').textContent = "0h 0m 0s";
                 document.getElementById('totalHours').textContent = data.syncedEffectiveHours;
-                // Calculate remaining
-                updateDisplay(totalSyncedMinutes);
+
+                const remainingMinutes = TARGET_MINUTES - totalSyncedMinutes;
+
+                const timeRemainingEl = document.getElementById('timeRemaining');
+                if (remainingMinutes <= 0) {
+                    timeRemainingEl.textContent = "DONE! 🎉";
+                    document.getElementById('goHomeTime').parentElement.innerHTML = "You have completed your hours!";
+                } else {
+                    const rH = Math.floor(remainingMinutes / 60);
+                    const rM = remainingMinutes % 60;
+                    timeRemainingEl.textContent = `${rH}h ${rM}m 0s`;
+                    document.getElementById('goHomeTime').parentElement.innerHTML = "Session inactive. Please punch in to continue.";
+                }
                 return;
             }
 
             // Parse Last Punch In Time
             const punchTime = parseTime(data.lastPunchIn);
+
+            // Calculate Go Home Time logic
+            // Since Synced Hours are "Effective Hours already completed", 
+            // the remaining time needed is (Target - Synced).
+            // We just need to add this duration to the Last Punch In time.
+
+            const remainingNeededMinutes = TARGET_MINUTES - totalSyncedMinutes;
+            // Add remaining minutes to punchTime
+            const goHomeDate = new Date(punchTime.getTime() + (remainingNeededMinutes * 60000));
+
+            // Format Go Home Time
+            const goHomeStr = goHomeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('goHomeTime').textContent = goHomeStr;
 
             // Start Timer
             updateTimer(punchTime, totalSyncedMinutes);
@@ -418,104 +469,23 @@
 
         function updateTimer(punchTime, syncedMinutes) {
             const now = new Date();
-            const diffMs = now - punchTime; // Difference in milliseconds
-            const diffMins = Math.floor(diffMs / 60000);
-
-            // Total Real-Time Minutes
-            const totalRealTimeMinutes = syncedMinutes + diffMins;
-
-            // Update Unsynced Duration Display
-            const unsyncedHrs = Math.floor(diffMins / 60);
-            const unsyncedMinsRest = diffMins % 60;
-            document.getElementById('unsyncedDuration').textContent = `${unsyncedHrs}h ${unsyncedMinsRest}m`;
-
-            // Update Total Hours Display
-            const totalHrs = Math.floor(totalRealTimeMinutes / 60);
-            const totalMinsRest = totalRealTimeMinutes % 60;
-            document.getElementById('totalHours').textContent = `${totalHrs}h ${totalMinsRest}m`;
-
-            // Calculate Remaining
-            updateDisplay(totalRealTimeMinutes);
-        }
-
-        function updateDisplay(currentTotalMinutes) {
-            const targetMinutes = (7 * 60) + 30; // 7h 30m = 450 mins
-            let remainingMinutes = targetMinutes - currentTotalMinutes;
-
-            const timeRemainingEl = document.getElementById('timeRemaining');
-
-            if (remainingMinutes <= 0) {
-                timeRemainingEl.textContent = "GO HOME! 🎉";
-                timeRemainingEl.style.color = "var(--accent)";
-                return;
-            }
-
-            // We want to show HH:MM:SS for the countdown.
-            // We know remaining minutes. But we are updating every second, so we might want simpler math.
-            // Let's refine the countdown to be precise to the second if possible.
-            // Ideally we should calculate target DATE and count down to it.
-
-            // Target is: Current Time + Remaining Time
-            // Actually, easier:
-            // Remaining Time = Target Duration - Current Duration
-            // Current Duration = Synced + (Now - PunchIn)
-
-            // Let's stick to minute-level or second-level precision?
-            // User asked for "live countdown". Seconds are good.
-
-            // Let's re-calculate precise remaining milliseconds for the countdown
-            // We have `currentTotalMinutes` which is integer minutes.
-            // Let's use the punchTime object if available for better precision.
-            // But for now, using the minutes is robust enough for the requirement logic.
-
-            // To get format HH:MM, we can just use the remainingMinutes
-            const rHours = Math.floor(remainingMinutes / 60);
-            const rMins = remainingMinutes % 60;
-
-            timeRemainingEl.textContent = `${rHours}h ${rMins}m`;
-
-            // If we want seconds, we need to track seconds in the Unsynced duration too.
-            // Let's keep it simple as requested: "Time Remaining" usually implies H:M. 
-            // But "Standard" countdown usually includes seconds.
-            // Let's add seconds for "Engineering" feel.
-
-            // Re-calculation with seconds:
-            // We need the raw milliseconds from "Now - PunchIn"
-            // But we only have minutes from SyncedHours.
-            // Assuming SyncedHours is exact minutes (0 seconds).
-
-            // Total Milliseconds Worked = (SyncedMinutes * 60 * 1000) + (Now - PunchTime)
-            // Target Milliseconds = (7 * 60 + 30) * 60 * 1000
-            // Remaining Milliseconds = Target - Total
-
-            // We need to access variables from `updateTimer`.
-            // I will refactor `updateTimer` slightly to pass milliseconds if needed, but the current implementation uses minutes. 
-            // I'll stick to H m format for the main countdown to avoid jitter if synced hours wasn't precise to seconds.
-            // Wait, user asked for "live countdown".
-            // Keka synced hours usually 3h 15m. It doesn't show seconds.
-            // So we can assume 3h 15m 00s for base.
-            // Then we add exact difference from logic.
-        }
-
-        // Override updateTimer for better precision
-        function updateTimer(punchTime, syncedMinutes) {
-            const now = new Date();
             const diffMs = now - punchTime;
 
             const syncedMs = syncedMinutes * 60 * 1000;
             const totalMs = syncedMs + diffMs;
 
-            const targetMs = (7 * 60 + 30) * 60 * 1000;
+            const targetMs = (7 * 60 + 30) * 60 * 1000; // 7h 30m target
             const remainingMs = targetMs - totalMs;
 
-            // Update Unsynced Duration
+            // Update Unsynced Duration / Time in Office
+            // This is effectively "How long since last punch"
             const unsyncedSecsTotal = Math.floor(diffMs / 1000);
             const uH = Math.floor(unsyncedSecsTotal / 3600);
             const uM = Math.floor((unsyncedSecsTotal % 3600) / 60);
             const uS = unsyncedSecsTotal % 60;
             document.getElementById('unsyncedDuration').textContent = `${uH}h ${uM}m ${uS}s`;
 
-            // Total Hours
+            // Update Total Hours (hidden by default but updated)
             const totalSecs = Math.floor(totalMs / 1000);
             const tH = Math.floor(totalSecs / 3600);
             const tM = Math.floor((totalSecs % 3600) / 60);
@@ -524,7 +494,8 @@
             // Countdown
             const timeRemainingEl = document.getElementById('timeRemaining');
             if (remainingMs <= 0) {
-                timeRemainingEl.textContent = "GO HOME! 🎉";
+                timeRemainingEl.textContent = "DONE! 🎉";
+                document.getElementById('goHomeTime').parentElement.innerHTML = "You can go home now! 🏠";
                 return;
             }
 

@@ -1,4 +1,7 @@
 flask
-google-generativeai
+google-genai
 pillow
 python-dotenv
+waitress
+flask-cors
+gunicorn
